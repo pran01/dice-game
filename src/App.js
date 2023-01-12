@@ -4,10 +4,11 @@ import { useState } from "react";
 import confetti from "./assets/images/confetti.gif";
 
 function App() {
-  const [rolls, setRolls] = useState([1, 2, 5]);
+  const [rolls, setRolls] = useState([1, 1, 1]);
   const [chance, setChance] = useState(1);
   const [won, setWon] = useState(false);
   const [again, setAgain] = useState(false);
+  const [unLock, setUnlock] = useState(true);
 
   const startRolling = () => {
     if (chance === 1) {
@@ -17,7 +18,6 @@ function App() {
       setTimeout(() => {
         setRolls([first, rolls[1], rolls[2]]);
       }, 500);
-      setChance(2);
     }
     if (chance === 2) {
       let second = Math.floor(Math.random() * 6) + 1;
@@ -29,6 +29,7 @@ function App() {
           setWon(true);
         } else {
           setAgain(true);
+          setUnlock(true);
         }
       }, 500);
       setChance(1);
@@ -44,9 +45,30 @@ function App() {
         />
       )}
       <div className="w-full max-w-md flex justify-around items-center">
-        <Die number={rolls[0]} />
-        <Die number={rolls[1]} />
-        <Die number={rolls[2]} />
+        <Die
+          id={1}
+          unLock={unLock}
+          setUnlock={setUnlock}
+          chance={chance}
+          setChance={setChance}
+          number={rolls[0]}
+        />
+        <Die
+          id={2}
+          unLock={unLock}
+          setUnlock={setUnlock}
+          chance={chance}
+          setChance={setChance}
+          number={rolls[1]}
+        />
+        <Die
+          id={3}
+          unLock={unLock}
+          setUnlock={setUnlock}
+          chance={chance}
+          setChance={setChance}
+          number={rolls[2]}
+        />
       </div>
       {again && (
         <span className="text-red-500 font-bold mt-4">Try Again !!</span>
@@ -54,7 +76,7 @@ function App() {
       <button
         className="w-max px-4 h-8 bg-black text-white rounded-md shadow-md mt-16"
         onClick={startRolling}>
-        Roll the dice
+        Roll 'em
       </button>
     </div>
   );
